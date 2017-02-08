@@ -1,0 +1,26 @@
+<?php
+
+
+//
+// Oussama Elgoumri
+// contact@sec4ar.com
+//
+// %date%
+//
+
+
+namespace OussamaElgoumri\Exceptions;
+
+
+class %class% extends \Exception
+{
+    /**
+     * Initialize Constructor.
+     *
+     * @param string    $msg    Optional|message to write
+     */
+    public function __construct($msg = null)
+    {
+        parent::__construct($msg);
+    }
+}

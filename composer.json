@@ -1,0 +1,32 @@
+{
+    "name": "oussama-elgoumri/php-image",
+    "description": "Take care of images for you (uploaded, remote and by path)",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Oussama Elgoumri",
+            "email": "ktsnepyg9igfz1@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^2.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.0",
+        "fzaninotto/Faker": "^1.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "OussamaElgoumri\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "OussamaElgoumri\\": "tests/"
+        }
+    }
+}
