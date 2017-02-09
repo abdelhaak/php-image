@@ -12,7 +12,6 @@
 namespace OussamaElgoumri;
 
 
-use Faker\Factory;
 use ReflectionClass;
 use ReflectionMethod;
 use FileSystemIterator;
@@ -20,13 +19,6 @@ use FileSystemIterator;
 
 class ImageTest extends TestCommon
 {
-    protected $faker;
-
-    public function setUp()
-    {
-        $this->faker = Factory::create();
-    }
-
     public function test_get()
     {
         $results = Image__get($this->faker->imageUrl);

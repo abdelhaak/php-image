@@ -10,9 +10,23 @@
 
 
 use OussamaElgoumri\Image;
+use OussamaElgoumri\ImageValidator;
 use OussamaElgoumri\RandomUserAgent;
 use OussamaElgoumri\Curl;
 
+
+if (!function_exists('ImageValidator')) {
+    /**
+     * Validate the given image.
+     *
+     * @param  string    $img
+     * @return bool
+     */
+    function ImageValidator__validate($img)
+    {
+        return (new ImageValidator)->validate($img);
+    }
+}
 
 if (!function_exists('Image__get')) {
     /**

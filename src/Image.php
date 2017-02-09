@@ -26,7 +26,7 @@ class Image
     public function get($img)
     {
         $path = $this->getPath($img);
-        $this->validate($path);
+        ImageValidator__validate($path);
         $uuid = $this->getUUID($path);
         $ext = $this->getExtension($path);
         $dir = $this->createDirs();

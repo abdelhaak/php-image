@@ -12,12 +12,20 @@
 namespace OussamaElgoumri;
 
 
+use Faker\Factory;
 use ReflectionClass;
 use ReflectionMethod;
 
 
 class TestCommon extends \PHPUnit_Framework_TestCase
 {
+    protected $faker;
+
+    public function setUp()
+    {
+        $this->faker = Factory::create();
+    }
+
     /**
      * Set the method visibility of the given object to public.
      *
