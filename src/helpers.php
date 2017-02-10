@@ -41,6 +41,32 @@ if (!function_exists('Image__get')) {
     }
 }
 
+if (!function_exists('Image__getPath')) {
+    /**
+     * Get the image path.
+     *
+     * @param  string    $img
+     * @return string
+     */
+    function Image__getPath($img)
+    {
+        return (new Image)->getPath($img);
+    }
+}
+
+if (!function_exists('Image__getRelativePath')) {
+    /**
+     * Get the image relative path.
+     *
+     * @param  string    $img
+     * @return string
+     */
+    function Image__getRelativePath($img)
+    {
+        return (new Image)->getRelativePath($img);
+    }
+}
+
 if (!function_exists('Curl__get')) {
     /**
      * Issue GET request.

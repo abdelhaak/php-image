@@ -19,21 +19,61 @@ use FileSystemIterator;
 class Image
 {
     /**
+     * @var ImagePath
+     */
+    protected $imagePath;
+
+    /**
      * Process the given image.
      *
      * @param string    $img    Path|Url|Input file name
      */
+    public function init($img)
+    {
+        $this->imagePath = $imagePath = new ImagePath($img);
+        ImageValidator__validate($imagePath->getPath());
+        $uuid = $this->getUuid($imagePath->getPath());
+        $imagePath->copy($uuid);
+
+        return $imagePath;
+    }
+
+    /**
+     * Get all the information about the image.
+     *
+     * @param string    $img    Path|Url|Input file name
+     * @return array
+     */
     public function get($img)
     {
-        $img = new ImagePath($img);
-        ImageValidator__validate($img->getPath());
-        $uuid = $this->getUuid($img->getPath());
-        $img->copy($uuid);
+        $imagePath = $this->init($img);
 
         return [
-            'path' => $img->getPath(),
-            'relative_path' => $img->getRelativePath(),
+            'path' => $imagePath->getPath(),
+            'relative_path' => $imagePath->getRelativePath(),
         ];
+    }
+
+    /**
+     * Get full path of the image.
+     *
+     * @param  string    $img
+     * @return string
+     */
+    public function getPath($img)
+    {
+        return $this->get($img)['path'];
+    }
+
+    /**
+     * Get image relative path.
+     *
+     * @param  string    $img
+     * @return string
+     */
+    public function getRelativePath($img)
+    {
+        return $this->get($img)['relative_path'];
     }
 
     /**
