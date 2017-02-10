@@ -1,5 +1,5 @@
 {
-    "name": "oussama-elgoumri/php-image",
+    "name": "elgoumri-oussama/php-image",
     "description": "Take care of images for you (uploaded, remote and by path)",
     "type": "library",
     "license": "MIT",
@@ -10,7 +10,8 @@
         }
     ],
     "require": {
-        "vlucas/phpdotenv": "^2.4"
+        "vlucas/phpdotenv": "^2.4",
+        "elgoumri-oussama/php-curl": "^0.1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.0",

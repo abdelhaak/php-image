@@ -4,9 +4,90 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6587b183c26071da39446f9b108cb619",
-    "content-hash": "563bd470ae33a3fb5a94fef2ee7316cc",
+    "hash": "02fd65a19ae41f6cbaef938d2d21f4af",
+    "content-hash": "469c38f91c26d64f5d8385eb1d31a7aa",
     "packages": [
+        {
+            "name": "elgoumri-oussama/php-curl",
+            "version": "v0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/OussamaElgoumri/php-curl.git",
+                "reference": "60f64f5ed12617d77d58f11bb6538a65c7e495cd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/OussamaElgoumri/php-curl/zipball/60f64f5ed12617d77d58f11bb6538a65c7e495cd",
+                "reference": "60f64f5ed12617d77d58f11bb6538a65c7e495cd",
+                "shasum": ""
+            },
+            "require": {
+                "elgoumri-oussama/php-random-user-agent": "^0.1.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "OussamaElgoumri\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Oussama Elgoumri",
+                    "email": "contact@sec4ar.com"
+                }
+            ],
+            "description": "Simply take all php curl complexity away, and give you 2 simple functions that solves 99% of your curl needs!",
+            "time": "2017-02-09 16:30:03"
+        },
+        {
+            "name": "elgoumri-oussama/php-random-user-agent",
+            "version": "v0.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/OussamaElgoumri/php-random-user-agent.git",
+                "reference": "aa204c868134637e96a3124f5821de8351ac89ab"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/OussamaElgoumri/php-random-user-agent/zipball/aa204c868134637e96a3124f5821de8351ac89ab",
+                "reference": "aa204c868134637e96a3124f5821de8351ac89ab",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "OussamaElgoumri\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Oussama Elgoumri",
+                    "email": "contact@sec4ar.com"
+                }
+            ],
+            "description": "Generating a random user agent, as simple as calling rua()",
+            "time": "2017-02-09 15:20:22"
+        },
         {
             "name": "vlucas/phpdotenv",
             "version": "v2.4.0",
