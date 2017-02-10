@@ -79,10 +79,22 @@ class ImagePathTest extends TestCommon
 
     public function test_copy()
     {
+        putenv('IMAGE_PUBLIC=tests/public/images');
         $img = new ImagePath($this->faker->image('/tmp', 1, 1));
         $uuid = sha1_file($img->getPath()) . image_type_to_extension(exif_imagetype($img->getPath()));
         $img->copy($uuid);
 
         $this->assertTrue(strpos($img->getPath(), $img->getRelativePath()) > 0);
+    }
+
+    /**
+     * @expectedException OussamaElgoumri\Exceptions\ImagePublicPathNotSetException
+     */
+    public function test_fail_copy()
+    {
+        putenv('IMAGE_PUBLIC=');
+        $img = new ImagePath($this->faker->image('/tmp', 1, 1));
+        $uuid = sha1_file($img->getPath()) . image_type_to_extension(exif_imagetype($img->getPath()));
+        $img->copy($uuid);
     }
 }
