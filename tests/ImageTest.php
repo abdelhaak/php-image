@@ -109,11 +109,18 @@ class ImageTest extends TestCommon
         $m->invoke($obj, __FILE__);
     }
 
-    public function test_getUUID()
+    public function test_getUuid()
     {
-        list($obj, $m) = $this->getMethod('getUUID');
+        list($obj, $m) = $this->getMethod('getUuid');
 
-        $results = $m->invoke($obj, $this->faker->imageUrl(1, 1));
-        $this->assertTrue(is_string($results));
+        $image = $this->faker->image('/tmp', 1, 1);
+        $ext = image_type_to_extension(exif_imagetype($image));
+        $hash = sha1_file($image);
+        $results = $m->invoke($obj, $image);
+        $this->assertTrue(strpos($results, $hash) === 0);
+
+        putenv("IMAGE_UUID=%time%.%ext%");
+        $results = $m->invoke($obj, $image);
+        $this->assertRegExp("/\d+{$ext}$/", $results);
     }
 }

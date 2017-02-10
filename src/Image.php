@@ -27,10 +27,9 @@ class Image
     {
         $path = $this->getPath($img);
         ImageValidator__validate($path);
-        $uuid = $this->getUUID($path);
-        $ext = $this->getExtension($path);
+        $uuid = $this->getUuid($path, $ext);
         $dir = $this->createDirs();
-        $newPath = $this->buildPath($dir, $uuid . $ext);
+        $newPath = $this->buildPath($dir, $uuid);
         rename($path, $newPath);
         return preg_replace('#.*(' . getenv('IMAGE_RELATIVE') . '.*)#', '$1', $newPath);
     }
@@ -108,29 +107,18 @@ class Image
     }
 
     /**
-     * Get the image extension.
-     *
-     * @param  string    $path
-     * @return string
-     */
-    private function getExtension($path)
-    {
-        $type = exif_imagetype($path);
-
-        return image_type_to_extension($type);
-    }
-
-    /**
      * Generate unique identifier for the image.
      *
      * @param  string    $path to the image
      * @return string
      */
-    private function getUUID($path)
+    private function getUuid($path)
     {
-        $hash = sha1_file($path);
+        $uuid = getenv('IMAGE_UUID') ?: '%hash%--%time%.%ext%';
+        $uuid = str_replace('%hash%', sha1_file($path), $uuid);
+        $uuid = str_replace('%time%', time(), $uuid);
 
-        return $hash . '--' . time();
+        return str_replace('.%ext%', image_type_to_extension(exif_imagetype($path)), $uuid);
     }
 
     /**
