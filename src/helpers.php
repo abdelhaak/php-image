@@ -13,7 +13,27 @@ use OussamaElgoumri\Image;
 use OussamaElgoumri\ImageValidator;
 use OussamaElgoumri\RandomUserAgent;
 use OussamaElgoumri\Curl;
+use OussamaElgoumri\Config;
 
+
+if (!function_exists('imageConfig')) {
+    /**
+     * Get or set the given configuration key.
+     *
+     * @param string    $key
+     * @param string    $value
+     * 
+     * @return string
+     */
+    function imageConfig($key, $value = null)
+    {
+        if (is_null($value)) {
+            return Config::getInstance()->get($key);
+        }
+
+        return Config::getInstance()->set($key, $value);
+    }
+}
 
 if (!function_exists('ImageValidator')) {
     /**
