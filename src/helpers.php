@@ -11,6 +11,20 @@
 
 use OussamaElgoumri\Components\Image;
 use OussamaElgoumri\Components\Image\ImageValidator;
+use OussamaElgoumri\Components\Image\ImageOptimizer;
+
+if (!function_exists('ImageOptimizer__run')) {
+    /**
+     * Optimize the given image in place.
+     *
+     * @param string    $img
+     */
+    function ImageOptimizer__run($img)
+    {
+        $imageOptimizer = new ImageOptimizer();
+        $imageOptimizer->run($img);
+    }
+}
 
 if (!function_exists('ImageValidator__validate')) {
     /**

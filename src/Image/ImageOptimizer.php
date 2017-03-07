@@ -9,7 +9,19 @@
 
 namespace OussamaElgoumri\Components\Image;
 
+use ImageOptimizer\OptimizerFactory;
+
 class ImageOptimizer
 {
-
+    /**
+     * Run image optimizer.
+     *
+     * @param string    $img
+     */
+    public function run($img)
+    {
+        $factory = new OptimizerFactory;
+        $optimizer = $factory->get();
+        $optimizer->optimize($img);
+    }
 }

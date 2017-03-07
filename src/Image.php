@@ -41,7 +41,7 @@ class Image
      *
      * @param string    $img    Path|Url|Input file name
      */
-    public function init($img)
+    public function run($img)
     {
         // Move image to /tmp
         $this->imagePath = $imagePath = new ImagePath($img);
@@ -49,11 +49,17 @@ class Image
         // Make sure we have a valid image:
         ImageValidator__validate($imagePath->getPath());
 
+        // Optimize the image:
+        ImageOptimizer__run($imagePath->getPath());
+
         // Generate unique id for the image:
         $uuid = $this->getUuid($imagePath->getPath());
 
         // Copy the image to the proper location:
         $imagePath->copy($uuid);
+
+        // Resize the image:
+        ImageResizer__run($imagePath->getPath());
 
         return $imagePath;
     }
