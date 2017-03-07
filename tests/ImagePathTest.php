@@ -1,6 +1,5 @@
 <?php
 
-
 //
 // Oussama Elgoumri
 // contact@sec4ar.com
@@ -8,22 +7,10 @@
 // Fri Feb 10 11:42:41 WET 2017
 //
 
-
 namespace OussamaElgoumri;
-
 
 class ImagePathTest extends TestCommon
 {
-    public function test_setBasePath()
-    {
-        global $base_path;
-        $base_path = null;
-
-        list($obj, $m) = $this->getMethod('setBasePath');
-        $results = $m->invoke($obj, __DIR__);
-        $this->assertFileExists($results);
-    }
-
     public function test_sanitize()
     {
         list($obj, $m) = $this->getMethod('sanitize');
@@ -33,14 +20,16 @@ class ImagePathTest extends TestCommon
 
     public function test_createDirs()
     {
+        $img = new Image;
+
         // Test default:
         list($obj, $m) = $this->getMethod('createDirs');
         $results = $m->invoke($obj);
-        $this->assertEquals($results, base_path(getenv('IMAGE_PUBLIC') . '/' . date('Y/m/d')));
+        $this->assertEquals($results, base_path(Config__get('IMAGE_PUBLIC') . '/' . date('Y/m/d')));
 
         // Test custom:
-        putenv('IMAGE_PUBLIC=tests/public/storage');
-        putenv('IMAGE_DIRS=d/H');
+        Config__set('IMAGE_PUBLIC', 'tests/public/storage');
+        Config__set('IMAGE_DIRS', 'd/H'); 
         $results = $m->invoke($obj);
         $this->assertEquals($results, base_path('tests/public/storage/' . date('d/H')));
     }
@@ -51,7 +40,7 @@ class ImagePathTest extends TestCommon
     public function test_fail_createDirs()
     {
         list($obj, $m) = $this->getMethod('createDirs');
-        putenv('IMAGE_PUBLIC=');
+        Config__set('IMAGE_PUBLIC', '');
         $m->invoke($obj);
     }
 
@@ -79,7 +68,7 @@ class ImagePathTest extends TestCommon
 
     public function test_copy()
     {
-        putenv('IMAGE_PUBLIC=tests/public/images');
+        Config__set('IMAGE_PUBLIC', 'tests/public/images');
         $img = new ImagePath($this->faker->image('/tmp', 1, 1));
         $uuid = sha1_file($img->getPath()) . image_type_to_extension(exif_imagetype($img->getPath()));
         $img->copy($uuid);
@@ -92,7 +81,7 @@ class ImagePathTest extends TestCommon
      */
     public function test_fail_copy()
     {
-        putenv('IMAGE_PUBLIC=');
+        Config__set('IMAGE_PUBLIC', '');
         $img = new ImagePath($this->faker->image('/tmp', 1, 1));
         $uuid = sha1_file($img->getPath()) . image_type_to_extension(exif_imagetype($img->getPath()));
         $img->copy($uuid);

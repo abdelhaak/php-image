@@ -4,9 +4,80 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "02fd65a19ae41f6cbaef938d2d21f4af",
-    "content-hash": "469c38f91c26d64f5d8385eb1d31a7aa",
+    "hash": "c1c85e9be8f921c35678c4b1fe30a888",
+    "content-hash": "bda954508adac108de0c985b6e6588cc",
     "packages": [
+        {
+            "name": "elgoumri-oussama/php-base-path",
+            "version": "v0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/OussamaElgoumri/php-base-path.git",
+                "reference": "a931dd7647b1e40e8ec08808c6e94e56dc957cbc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/OussamaElgoumri/php-base-path/zipball/a931dd7647b1e40e8ec08808c6e94e56dc957cbc",
+                "reference": "a931dd7647b1e40e8ec08808c6e94e56dc957cbc",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "OussamaElgoumri\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Oussama Elgoumri",
+                    "email": "contact@sec4ar.com"
+                }
+            ],
+            "description": "provide a simple function base_path() that return application base path.",
+            "time": "2017-02-17 21:49:27"
+        },
+        {
+            "name": "elgoumri-oussama/php-config",
+            "version": "v0.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/OussamaElgoumri/php-config.git",
+                "reference": "e8d3139f08794fcf1820f9721cb288a7dc5e4647"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/OussamaElgoumri/php-config/zipball/e8d3139f08794fcf1820f9721cb288a7dc5e4647",
+                "reference": "e8d3139f08794fcf1820f9721cb288a7dc5e4647",
+                "shasum": ""
+            },
+            "require": {
+                "elgoumri-oussama/php-base-path": "^0.0.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "OussamaElgoumri\\Config\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "time": "2017-03-05 00:25:43"
+        },
         {
             "name": "elgoumri-oussama/php-curl",
             "version": "v0.1",
@@ -87,56 +158,6 @@
             ],
             "description": "Generating a random user agent, as simple as calling rua()",
             "time": "2017-02-09 15:20:22"
-        },
-        {
-            "name": "vlucas/phpdotenv",
-            "version": "v2.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/vlucas/phpdotenv.git",
-                "reference": "3cc116adbe4b11be5ec557bf1d24dc5e3a21d18c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/3cc116adbe4b11be5ec557bf1d24dc5e3a21d18c",
-                "reference": "3cc116adbe4b11be5ec557bf1d24dc5e3a21d18c",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.9"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.8 || ^5.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.4-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Dotenv\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause-Attribution"
-            ],
-            "authors": [
-                {
-                    "name": "Vance Lucas",
-                    "email": "vance@vancelucas.com",
-                    "homepage": "http://www.vancelucas.com"
-                }
-            ],
-            "description": "Loads environment variables from `.env` to `getenv()`, `$_ENV` and `$_SERVER` automagically.",
-            "keywords": [
-                "dotenv",
-                "env",
-                "environment"
-            ],
-            "time": "2016-09-01 10:05:43"
         }
     ],
     "packages-dev": [
@@ -193,6 +214,47 @@
                 "instantiate"
             ],
             "time": "2015-06-14 21:17:01"
+        },
+        {
+            "name": "elgoumri-oussama/php-test-common",
+            "version": "v0.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/OussamaElgoumri/php-test-common.git",
+                "reference": "bbddb49fed8d3a9b397a6008dff4b44edb0139a8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/OussamaElgoumri/php-test-common/zipball/bbddb49fed8d3a9b397a6008dff4b44edb0139a8",
+                "reference": "bbddb49fed8d3a9b397a6008dff4b44edb0139a8",
+                "shasum": ""
+            },
+            "require": {
+                "elgoumri-oussama/php-base-path": "^0.0.1",
+                "fzaninotto/faker": "^1.6",
+                "vlucas/phpdotenv": "^2.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "OussamaElgoumri\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Oussama Elgoumri",
+                    "email": "contact@sec4ar.com"
+                }
+            ],
+            "description": "Provide some common functionalities for tests, like access private methods, load environment variables, and faker, etc..",
+            "time": "2017-02-18 11:37:34"
         },
         {
             "name": "fzaninotto/faker",
@@ -1389,6 +1451,56 @@
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
             "time": "2016-10-03 07:35:21"
+        },
+        {
+            "name": "vlucas/phpdotenv",
+            "version": "v2.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vlucas/phpdotenv.git",
+                "reference": "3cc116adbe4b11be5ec557bf1d24dc5e3a21d18c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/3cc116adbe4b11be5ec557bf1d24dc5e3a21d18c",
+                "reference": "3cc116adbe4b11be5ec557bf1d24dc5e3a21d18c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8 || ^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dotenv\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause-Attribution"
+            ],
+            "authors": [
+                {
+                    "name": "Vance Lucas",
+                    "email": "vance@vancelucas.com",
+                    "homepage": "http://www.vancelucas.com"
+                }
+            ],
+            "description": "Loads environment variables from `.env` to `getenv()`, `$_ENV` and `$_SERVER` automagically.",
+            "keywords": [
+                "dotenv",
+                "env",
+                "environment"
+            ],
+            "time": "2016-09-01 10:05:43"
         },
         {
             "name": "webmozart/assert",

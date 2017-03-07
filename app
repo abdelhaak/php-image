@@ -1,8 +1,6 @@
 #!/usr/bin/php
 
-
 <?php
-
 
 //
 // Oussama Elgoumri
@@ -11,12 +9,9 @@
 // Wed Feb  8 12:48:02 WET 2017
 //
 
-
 require_once __DIR__ . '/autoload.php';
 
-
 use OussamaElgoumri\Console\Exception;
-
 
 if (count($argv) == 1 || preg_match('/\b[-]?[-]?h[e]?[l]?[p]?\b/', $argv[1])) {
     about();

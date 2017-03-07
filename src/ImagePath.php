@@ -1,6 +1,5 @@
 <?php
 
-
 //
 // Oussama Elgoumri
 // contact@sec4ar.com
@@ -8,13 +7,10 @@
 // Fri Feb 10 10:45:22 WET 2017
 //
 
-
 namespace OussamaElgoumri;
-
 
 use FileSystemIterator;
 use OussamaElgoumri\Exceptions\ImagePublicPathNotSetException;
-
 
 class ImagePath
 {
@@ -28,7 +24,6 @@ class ImagePath
      */
     public function __construct($img)
     {
-        $this->setBasePath(__DIR__);
         $this->path = $this->getFrom($img);
     }
 
@@ -100,9 +95,9 @@ class ImagePath
      */
     private function createDirs()
     {
-        $dirs = getenv('IMAGE_DIRS') ?: "Y/m/d";
+        $dirs = Config__get('IMAGE_DIRS');
         $dirs = date($dirs);
-        $public = getenv('IMAGE_PUBLIC');
+        $public = Config__get('IMAGE_PUBLIC');
 
         if (!$public) {
             throw new ImagePublicPathNotSetException();
@@ -113,7 +108,7 @@ class ImagePath
         if (is_dir($public)) {
             $path = $this->sanitize($public, $dirs);
         } else {
-            $path = base_path($this->sanitize($public, $dirs));
+            $path = base_path($public, $dirs);
         }
 
         if (!file_exists($path)) {
@@ -143,30 +138,5 @@ class ImagePath
         }
 
         return rtrim($path, '/');
-    }
-
-    /**
-     * Set the base path of the host application.
-     *
-     * @param  string    $dir
-     * @return string
-     */
-    private function setBasePath($dir)
-    {
-        global $base_path;
-
-        if (empty($base_path)) {
-            $i = new FileSystemIterator($dir, FileSystemIterator::SKIP_DOTS);
-
-            foreach ($i as $file) {
-                if ($file->isDir() && $file->getFilename() === "vendor") {
-                    return $base_path = $dir;
-                }
-            }
-
-            return $this->setBasePath(dirname($dir));
-        }
-
-        return $base_path;
     }
 }

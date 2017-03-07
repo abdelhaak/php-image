@@ -1,6 +1,5 @@
 <?php
 
-
 //
 // Oussama Elgoumri
 // contact@sec4ar.com
@@ -8,20 +7,17 @@
 // Wed Feb  8 11:57:11 WET 2017
 //
 
-
 namespace OussamaElgoumri;
-
 
 use ReflectionClass;
 use ReflectionMethod;
 use FileSystemIterator;
 
-
 class ImageTest extends TestCommon
 {
     public function test_get()
     {
-        putenv('IMAGE_PUBLIC=/tests/public/images');
+        Config__set('IMAGE_PUBLIC', '/tests/public/images');
         $results = Image__get($this->faker->imageUrl(1, 1));
         $this->assertArrayHasKey('path', $results);
         $this->assertArrayHasKey('relative_path', $results);
@@ -29,14 +25,14 @@ class ImageTest extends TestCommon
 
     public function test_getPath()
     {
-        putenv('IMAGE_PUBLIC=tests/public/images');
+        Config__set('IMAGE_PUBLIC', 'tests/public/images');
         $results = Image__getPath($this->faker->imageUrl(1, 1));
         $this->assertFileExists($results);
     }
 
     public function test_getRelativePath()
     {
-        putenv('IMAGE_PUBLIC=tests/public/images');
+        Config__set('IMAGE_PUBLIC', 'tests/public/images');
         $results = Image__getRelativePath($this->faker->imageUrl(1, 1));
         $this->assertFileExists(base_path('tests/public/' . $results));
     }

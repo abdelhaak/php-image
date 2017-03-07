@@ -1,6 +1,5 @@
 <?php
 
-
 //
 // Oussama Elgoumri
 // contact@sec4ar.com
@@ -8,9 +7,7 @@
 // Wed Feb  8 22:56:52 WET 2017
 //
 
-
 namespace OussamaElgoumri;
-
 
 use OussamaElgoumri\Exceptions\ImagePathNotValidException;
 use OussamaElgoumri\Exceptions\ImageTypeNotValidException;
@@ -18,7 +15,6 @@ use OussamaElgoumri\Exceptions\ImageTypeNotAllowedException;
 use OussamaElgoumri\Exceptions\ImageTypeIsDeniedException;
 use OussamaElgoumri\Exceptions\ImageTypeNotSupportedBy__exif_imagetype__Exception;
 use OussamaElgoumri\Exceptions\ImageTypeSeparatorNotSupportedException;
-
 
 class ImageValidator
 {
@@ -73,7 +69,7 @@ class ImageValidator
      */
     private function getTypes($item)
     {
-        $types = getenv($item);
+        $types = Config__get($item);
 
         if (!$types) {
             return false;

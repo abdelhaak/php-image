@@ -11,29 +11,6 @@
 
 use OussamaElgoumri\Image;
 use OussamaElgoumri\ImageValidator;
-use OussamaElgoumri\RandomUserAgent;
-use OussamaElgoumri\Curl;
-use OussamaElgoumri\Config;
-
-
-if (!function_exists('imageConfig')) {
-    /**
-     * Get or set the given configuration key.
-     *
-     * @param string    $key
-     * @param string    $value
-     * 
-     * @return string
-     */
-    function imageConfig($key, $value = null)
-    {
-        if (is_null($value)) {
-            return Config::getInstance()->get($key);
-        }
-
-        return Config::getInstance()->set($key, $value);
-    }
-}
 
 if (!function_exists('ImageValidator')) {
     /**
@@ -102,36 +79,6 @@ if (!function_exists('Curl__get')) {
     }
 }
 
-if (!function_exists('Curl__post')) {
-    /**
-     * Issue POST request.
-     *
-     * @param string    $link
-     * @param array     $fields
-     * @param array     $options
-     *
-     * @return mixed
-     */
-    function Curl__post($link, $fields = [], $options = [])
-    {
-        return (new Curl)->post($link, $fields, $options);
-    }
-}
-
-if (!function_exists('rua')) {
-    /**
-     * Get random user agent.
-     *
-     * @param  array     $list of languages to choose from.
-     * @return string
-     */
-    function rua($lang = ['en-US'])
-    {
-        return RandomUserAgent::getInstance()
-            ->get($lang);
-    }
-}
-
 if (!function_exists('downloadToTmp')) {
     /**
      * Download a file and put it in /tmp
@@ -147,25 +94,6 @@ if (!function_exists('downloadToTmp')) {
         fclose($handle);
 
         return $tmpfile;
-    }
-}
-
-if (!function_exists('base_path')) {
-    /**
-     * Get base path.
-     *
-     * @param  string    $thing
-     * @return string
-     */
-    function base_path($thing = '')
-    {
-        global $base_path;
-
-        if ($thing) {
-            $thing = '/' . trim($thing, '/');
-        }
-
-        return $base_path . $thing;
     }
 }
 
