@@ -21,7 +21,8 @@
     },
     "autoload": {
         "psr-4": {
-            "OussamaElgoumri\\Components\\": "src/"
+            "OussamaElgoumri\\Components\\": "src/",
+            "OussamaElgoumri\\Exceptions\\": "src/Exceptions"
         },
         "files": [
             "src/helpers.php"
