@@ -7,7 +7,10 @@
 // Wed Feb  8 23:03:41 WET 2017
 //
 
-namespace OussamaElgoumri;
+namespace OussamaElgoumri\Components\Image;
+
+use OussamaElgoumri\TestCommon;
+use OussamaElgoumri\Components\Image\ImageValidator;
 
 class ImageValidatorTest extends TestCommon
 {

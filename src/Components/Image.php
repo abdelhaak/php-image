@@ -7,8 +7,9 @@
 // Wed Feb  8 10:40:25 WET 2017
 //
 
-namespace OussamaElgoumri;
+namespace OussamaElgoumri\Components;
 
+use OussamaElgoumri\Components\Image\ImagePath;
 use OussamaElgoumri\Exceptions\ImageNotValidException;
 use FileSystemIterator;
 
@@ -31,6 +32,7 @@ class Image
             'IMAGE_PUBLIC'   => 'public/images',
             'IMAGE_RELATIVE' => 'images',
             'IMAGE_UUID'     => '%hash%--%time%.%ext%',
+            'IMAGE_OPTIMIZE' => true,
         ]);
     }
 

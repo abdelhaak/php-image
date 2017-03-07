@@ -7,7 +7,7 @@
 // Fri Feb 10 10:45:22 WET 2017
 //
 
-namespace OussamaElgoumri;
+namespace OussamaElgoumri\Components\Image;
 
 use FileSystemIterator;
 use OussamaElgoumri\Exceptions\ImagePublicPathNotSetException;

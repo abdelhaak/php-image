@@ -9,10 +9,10 @@
 //
 
 
-use OussamaElgoumri\Image;
-use OussamaElgoumri\ImageValidator;
+use OussamaElgoumri\Components\Image;
+use OussamaElgoumri\Components\Image\ImageValidator;
 
-if (!function_exists('ImageValidator')) {
+if (!function_exists('ImageValidator__validate')) {
     /**
      * Validate the given image.
      *

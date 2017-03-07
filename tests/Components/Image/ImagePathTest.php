@@ -7,7 +7,10 @@
 // Fri Feb 10 11:42:41 WET 2017
 //
 
-namespace OussamaElgoumri;
+namespace OussamaElgoumri\Components\Image;
+
+use OussamaElgoumri\TestCommon;
+use OussamaElgoumri\Components\Image;
 
 class ImagePathTest extends TestCommon
 {

@@ -7,11 +7,12 @@
 // Wed Feb  8 11:57:11 WET 2017
 //
 
-namespace OussamaElgoumri;
+namespace OussamaElgoumri\Components;
 
 use ReflectionClass;
 use ReflectionMethod;
 use FileSystemIterator;
+use OussamaElgoumri\TestCommon;
 
 class ImageTest extends TestCommon
 {

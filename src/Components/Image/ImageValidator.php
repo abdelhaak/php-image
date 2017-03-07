@@ -7,7 +7,7 @@
 // Wed Feb  8 22:56:52 WET 2017
 //
 
-namespace OussamaElgoumri;
+namespace OussamaElgoumri\Components\Image;
 
 use OussamaElgoumri\Exceptions\ImagePathNotValidException;
 use OussamaElgoumri\Exceptions\ImageTypeNotValidException;
