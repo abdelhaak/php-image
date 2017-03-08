@@ -15,12 +15,12 @@ class ImageOptimizerTest extends TestCommon
 {
     public function test_run()
     {
-        copy(base_path('tests/optimize-me.jpg'), '/tmp/optimize-me.jpg');
+        copy(base_path('tests/optimize-me.png'), '/tmp/optimize-me.png');
         $imageOptimizer = new ImageOptimizer();
-        $imageOptimizer->run('/tmp/optimize-me.jpg');
+        $imageOptimizer->run('/tmp/optimize-me.png');
 
-        $original_size = filesize(base_path('tests/optimize-me.jpg'));
-        $optimized_size = filesize('/tmp/optimize-me.jpg');
+        $original_size = filesize(base_path('tests/optimize-me.png'));
+        $optimized_size = filesize('/tmp/optimize-me.png');
 
         $this->assertLessThan($original_size, $optimized_size);
     }

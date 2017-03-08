@@ -1,6 +1,5 @@
 <?php
 
-
 //
 // Oussama Elgoumri
 // contact@sec4ar.com
@@ -8,10 +7,22 @@
 // Wed Feb  8 10:37:18 WET 2017
 //
 
-
 use OussamaElgoumri\Components\Image;
 use OussamaElgoumri\Components\Image\ImageValidator;
 use OussamaElgoumri\Components\Image\ImageOptimizer;
+use OussamaElgoumri\Components\Image\ImageResizer;
+
+if (!function_exists('ImageResizer__run')) {
+    /**
+     * Resize the given image.
+     *
+     * @param string    $img
+     */
+    function ImageResizer__run($img)
+    {
+        (new ImageResizer)->run($img);
+    }
+}
 
 if (!function_exists('ImageOptimizer__run')) {
     /**

@@ -10,3 +10,4 @@ Session.vim
 .netrwhist
 *~
 tags
+tests/optimize-me--*
