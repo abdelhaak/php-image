@@ -177,8 +177,8 @@ $data = Image__unserialize($serialized_images);
 > you'l have then to resolve the namespace of the class and all that headeach.!
 >
 
-And There Is More
-=================
+ImageIterator usage:
+====================
 `Image::unserialize()` and `Image::get()` will return an iterrable instance of
 `ImageIterator` that will allow you to:
 
