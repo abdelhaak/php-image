@@ -1,6 +1,5 @@
 <?php
 
-
 //
 // Oussama Elgoumri
 // contact@sec4ar.com
@@ -8,11 +7,9 @@
 // Thu Feb  9 00:19:48 CET 2017
 //
 
-
 namespace OussamaElgoumri\Exceptions;
 
-
-class ImageTypeNotAllowedException extends \Exception
+class ImageTypeNotAllowedException extends ImageException
 {
     /**
      * Initialize Constructor.

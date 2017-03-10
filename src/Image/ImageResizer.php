@@ -16,7 +16,7 @@ class ImageResizer
 {
     public function __construct()
     {
-        Image::configure(['driver' => 'imagick']);
+        Image::configure();
     }
 
     /**
@@ -27,10 +27,13 @@ class ImageResizer
     public function run($img)
     {
         $sizes = $this->getSizes();
+        $paths = [];
 
         foreach ($sizes as $size) {
-            $this->resize($img, $size);
+            $paths[] = $this->resize($img, $size);
         }
+
+        return $paths;
     }
 
     /**
@@ -43,7 +46,9 @@ class ImageResizer
     {
         $image = Image::make($img);
         $image->resize($size['width'], $size['height']);
-        $image->save($this->getPath($img, $size));
+        $path = $this->getPath($img, $size);
+        $image->save($path);
+        return $path;
     }
 
     /**

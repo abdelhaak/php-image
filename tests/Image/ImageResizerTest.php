@@ -29,6 +29,10 @@ class ImageResizerTest extends TestCommon
         $info = getimagesize($resized);
         $this->assertEquals($info[0], 800);
         $this->assertEquals($info[1], 600);
+
+        if (file_exists($resized)) {
+            unlink($resized);
+        }
     } 
 
     public function test_getPath()

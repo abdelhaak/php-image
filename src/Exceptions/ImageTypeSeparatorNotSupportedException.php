@@ -1,6 +1,5 @@
 <?php
 
-
 //
 // Oussama Elgoumri
 // contact@sec4ar.com
@@ -8,11 +7,9 @@
 // Thu Feb  9 00:39:31 CET 2017
 //
 
-
 namespace OussamaElgoumri\Exceptions;
 
-
-class ImageTypeSeparatorNotSupportedException extends \Exception
+class ImageTypeSeparatorNotSupportedException extends ImageException
 {
     /**
      * Initialize Constructor.

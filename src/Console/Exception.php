@@ -1,6 +1,5 @@
 <?php
 
-
 //
 // Oussama Elgoumri
 // contact@sec4ar.com
@@ -8,9 +7,7 @@
 // Wed Feb  8 13:26:50 WET 2017
 //
 
-
 namespace OussamaElgoumri\Console;
-
 
 class Exception
 {

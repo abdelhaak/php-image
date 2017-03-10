@@ -63,24 +63,25 @@ class ImageValidatorTest extends TestCommon
     {
         list($obj, $m) = $this->getMethod('getTypes');
 
-        $results = $m->invoke($obj, 'not_exists');
+        $results = $m->invoke($obj, 'not_exists', '');
         $this->assertFalse($results);
 
         Config__set('IMAGE_ALLOWED_TYPES', 'gif,png,jpeg');
-        $results = $m->invoke($obj, 'IMAGE_ALLOWED_TYPES');
+        $results = $m->invoke($obj, 'IMAGE_ALLOWED_TYPES', '');
         $this->assertEquals($results, [IMAGETYPE_GIF, IMAGETYPE_PNG, IMAGETYPE_JPEG]);
 
         Config__set('IMAGE_ALLOWED_TYPES', 'gif png jpeg   psd');
-        $results = $m->invoke($obj, 'IMAGE_ALLOWED_TYPES');
+        $results = $m->invoke($obj, 'IMAGE_ALLOWED_TYPES', '');
         $this->assertEquals($results, [IMAGETYPE_GIF, IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_PSD]);
 
         Config__set('IMAGE_ALLOWED_TYPES', 'imagetype_psd, jpeg,  IMAGETYPE_PNG');
-        $results = $m->invoke($obj, 'IMAGE_ALLOWED_TYPES');
+        $results = $m->invoke($obj, 'IMAGE_ALLOWED_TYPES', '');
         $this->assertEquals($results, [IMAGETYPE_PSD, IMAGETYPE_JPEG, IMAGETYPE_PNG]);
 
         try {
-            Config__set('IMAGE_ALLOWED_TYPES', 'png,jpegpsd');
-            $m->invoke($obj, 'IMAGE_ALLOWED_TYPES');
+            Config__set('IMAGE_ALLOWED_TYPES', 'png,jpegpsd', '');
+            $m->invoke($obj, 'IMAGE_ALLOWED_TYPES', '');
+            $this->assertFalse(true);
         } catch (\OussamaElgoumri\Exceptions\ImageTypeNotSupportedBy__exif_imagetype__Exception $e) {
             $this->assertTrue(true);
         }

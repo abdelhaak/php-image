@@ -4,7 +4,7 @@
 // Oussama Elgoumri
 // contact@sec4ar.com
 //
-// Wed Mar  8 12:23:28 UTC 2017
+// Fri Mar  10 09:31:02 UTC 2017
 //
 
 return [
@@ -15,5 +15,5 @@ return [
     "IMAGE_RELATIVE" => "images",
     "IMAGE_UUID" => "%hash%--%time%.%ext%",
     "IMAGE_OPTIMIZE" => true,
-    "IMAGE_RESIZE" => "1024x768,800x600,460x308,320x240,240x160,160x160,75x75",
+    "IMAGE_SIZES" => "1024x768,800x600,460x308,320x240,240x160,160x160,75x75",
 ];

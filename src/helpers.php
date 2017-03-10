@@ -104,24 +104,6 @@ if (!function_exists('Curl__get')) {
     }
 }
 
-if (!function_exists('downloadToTmp')) {
-    /**
-     * Download a file and put it in /tmp
-     *
-     * @param  string    $url
-     * @return string
-     */
-    function downloadToTmp($url)
-    {
-        $tmpfile = tempnam('', '');
-        $handle = fopen($tmpfile, 'w');
-        fwrite($handle, Curl__get($url));
-        fclose($handle);
-
-        return $tmpfile;
-    }
-}
-
 if (!function_exists('about')) {
     /**
      * WTF! is all this about?

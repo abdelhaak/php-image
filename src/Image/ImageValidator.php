@@ -18,8 +18,9 @@ use OussamaElgoumri\Exceptions\ImageTypeSeparatorNotSupportedException;
 
 class ImageValidator
 {
-    protected $allowed_types;
-    protected $denied_types;
+    private $allowed_types;
+    private $denied_types;
+    private $type;
 
     /**
      * Initialize Constructor.
@@ -43,7 +44,7 @@ class ImageValidator
             throw new ImagePathNotValidException($path);
         }
 
-        $type = exif_imagetype($path);
+        $this->type = $type = exif_imagetype($path);
 
         if ($type === FALSE) {
             throw new ImageTypeNotValidException();
@@ -58,6 +59,16 @@ class ImageValidator
         }
 
         return true;
+    }
+
+    /**
+     * Get the image type.
+     *
+     * @return integer
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
     /**
@@ -81,6 +92,8 @@ class ImageValidator
             $sep = ';';
         } elseif (strpos($types, ' ') !== FALSE) {
             $sep = ' ';
+        } else {
+            $sep = ',';
         }
 
         $types = array_filter(explode(

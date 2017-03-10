@@ -4,117 +4,388 @@
 // Oussama Elgoumri
 // contact@sec4ar.com
 //
-// Wed Feb  8 10:40:25 WET 2017
+// Thu Mar  9 09:59:14 WET 2017
 //
 
 namespace OussamaElgoumri\Components;
 
-use OussamaElgoumri\Components\Image\ImagePath;
-use OussamaElgoumri\Exceptions\ImageNotValidException;
-use FileSystemIterator;
+use OussamaElgoumri\Components\Image\ImageItem;
+use OussamaElgoumri\Components\Image\ImageResizer;
+use OussamaElgoumri\Components\Image\ImageValidator;
+use ImageOptimizer\OptimizerFactory;
 
 class Image
 {
     /**
-     * @var ImagePath
+     * @var string  $img    Valid image location.
      */
-    protected $imagePath;
+    private $img;
+
+    /**
+     * @var integer     $type   see: exif_imagetype()
+     */
+    private $type;
+
+    /**
+     * @var string  $resolved_img   Local file path to the img.
+     */
+    private $resolved_img;
+
+    /**
+     * @var string  $path   full path to the image inside the public folder
+     */
+    private $path;
+
+    /**
+     * @var string  $relative_path  will be used in <img src="...">
+     */
+    private $relative_path;
+
+    /**
+     * @var string  $uuid   unique identified for the image.
+     */
+    private $uuid;
+
+    /**
+     * @var array   $resized_imgs_paths     list of resized_images.
+     */
+    private $resized_imgs;
+
+    /**
+     * @var array   compiled images.
+     */
+    private $data = [];
+
+    /**
+     * @var $default_config     Default image configuration.
+     */
+    protected $default_config = [
+        'IMAGE_ALLOWED_TYPES',
+        'IMAGE_DENIED_TYPES',
+        'IMAGE_DIRS'     => 'Y/i/d',
+        'IMAGE_PUBLIC'   => 'public/images',
+        'IMAGE_RELATIVE' => 'images',
+        'IMAGE_UUID'     => '%hash%--%time%.%ext%',
+        'IMAGE_OPTIMIZE' => true,
+        'IMAGE_SIZES'    => '1024x768,800x600,460x308,320x240,240x160,160x160,75x75',
+    ];
 
     /**
      * Initialize Constructor.
+     *
+     * @param string    $img
      */
-    public function __construct()
+    public function __construct($img = null)
     {
-        Config__load('images', [
-            'IMAGE_ALLOWED_TYPES',
-            'IMAGE_DENIED_TYPES',
-            'IMAGE_DIRS'     => 'Y/i/d',
-            'IMAGE_PUBLIC'   => 'public/images',
-            'IMAGE_RELATIVE' => 'images',
-            'IMAGE_UUID'     => '%hash%--%time%.%ext%',
-            'IMAGE_OPTIMIZE' => true,
-            'IMAGE_SIZES'    => '1024x768,800x600,460x308,320x240,240x160,160x160,75x75',
-        ]);
+        if ($img) {
+            $this->img = $img;
+            $this->defaults();
+        }
     }
 
     /**
-     * Process the given image.
-     *
-     * @param string    $img    Path|Url|Input file name
+     * Apply default configuration to the image.
      */
-    public function run($img)
+    private function defaults()
     {
-        // Move image to /tmp
-        $this->imagePath = $imagePath = new ImagePath($img);
+        Config__load('images', $this->default_config);
 
-        // Make sure we have a valid image:
-        ImageValidator__validate($imagePath->getPath());
-
-        // Optimize the image:
-        ImageOptimizer__run($imagePath->getPath());
-
-        // Generate unique id for the image:
-        $uuid = $this->getUuid($imagePath->getPath());
-
-        // Copy the image to the proper location:
-        $imagePath->copy($uuid);
-
-        // Resize the image:
-        ImageResizer__run($imagePath->getPath());
-
-        return $imagePath;
+        $this
+            ->resolve()
+            ->validate()
+            ->compress()
+            ->uuid()
+            ->copy()
+            ->resize()
+            ->compile();
     }
 
     /**
-     * Get all the information about the image.
+     * Get all the information.
      *
-     * @param string    $img    Path|Url|Input file name
      * @return array
      */
-    public function get($img)
+    public function get()
     {
-        $imagePath = $this->init($img);
-
-        return [
-            'path' => $imagePath->getPath(),
-            'relative_path' => $imagePath->getRelativePath(),
-        ];
+        return $this->data;
     }
 
     /**
-     * Get full path of the image.
+     * Get image full path.
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * Compile images.
+     *
+     * @return $this
+     */
+    public function compile()
+    {
+        $imageItem = new ImageItem;
+        $imageItem->setPath($this->path);
+        $imageItem->setRelativePath($this->relative_path);
+        $imageItem->setType($this->type);
+        $this->data[] = $imageItem;
+
+        foreach ($this->resized_imgs as $img) {
+            $imageItem = new ImageItem;
+            $imageItem->setPath($img['path']);
+            $imageItem->setRelativePath($img['relative_path']);
+            $imageItem->setType($this->type);
+            $this->data[] = $imageItem;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Resize the image.
+     *
+     * @return $this
+     */
+    public function resize()
+    {
+        $imageResizer = new ImageResizer;
+        $resized_imgs = $imageResizer->run($this->path);
+
+        foreach ($resized_imgs as $img) {
+            $this->resized_imgs[] = [
+                'path' => $img,
+                'relative_path' => $this->getRelativePath($img),
+            ];
+        }
+
+        return $this;
+    }
+
+    /**
+     * Copy the image to it's final location.
+     *
+     * @return $this
+     */
+    public function copy()
+    {
+        $dir = $this->createDirs();
+        $path = $this->sanitize($dir, $this->uuid);
+        rename($this->resolved_img, $path);
+        $this->path = $path;
+        $this->relative_path = $this->getRelativePath($path);
+        return $this;
+    }
+
+    /**
+     * Get relative image path.
      *
      * @param  string    $img
      * @return string
      */
-    public function getPath($img)
+    public function getRelativePath($img = null)
     {
-        return $this->get($img)['path'];
+        if (!$img) {
+            return $this->relative_img;
+        }
+
+        return preg_replace(
+            '#.*(' . Config__get('IMAGE_RELATIVE') . '.*)#'
+            , '$1'
+            , $img
+        );
     }
 
     /**
-     * Get image relative path.
+     * Create directories to host image.
      *
-     * @param  string    $img
      * @return string
      */
-    public function getRelativePath($img)
+    private function createDirs()
     {
-        return $this->get($img)['relative_path'];
+        $dirs = Config__get('IMAGE_DIRS');
+        $dirs = date($dirs);
+        $public = Config__get('IMAGE_PUBLIC');
+
+        if (!$public) {
+            throw new ImagePublicPathNotSetException();
+        }
+
+        $public = $this->sanitize('/', $public);
+
+        if (is_dir($public)) {
+            $path = $this->sanitize($public, $dirs);
+        } else {
+            $path = base_path($public, $dirs);
+        }
+
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
+
+        return $path;
+    }
+
+    /**
+     * Remove all extra slashs, and combine the given args.
+     *
+     * @param  ...
+     * @return string
+     */
+    private function sanitize()
+    {
+        $args = func_get_args();
+        $path = '';
+
+        foreach (range(0, func_num_args() - 1) as $i) {
+            if ($i == 0) {
+                $path .= rtrim($args[$i], '/') . '/';
+            } else {
+                $path .= trim($args[$i], '/') . '/';
+            }
+        }
+
+        return rtrim($path, '/');
     }
 
     /**
      * Generate unique identifier for the image.
      *
-     * @param  string    $path to the image
-     * @return string
+     * @param string    $img
+     * @param string    $uuid
+     *
+     * @return this
      */
-    private function getUuid($path)
+    public function uuid()
     {
-        $uuid = getenv('IMAGE_UUID') ?: '%hash%--%time%.%ext%';
-        $uuid = str_replace('%hash%', sha1_file($path), $uuid);
-        $uuid = str_replace('%time%', time(), $uuid);
+        $img = $this->resolved_img;
+        $uuid = Config__get('IMAGE_UUID');
 
-        return str_replace('.%ext%', image_type_to_extension(exif_imagetype($path)), $uuid);
+        $uuid = str_replace('%hash%', sha1_file($img), $uuid);
+        $uuid = str_replace('%time%', time(), $uuid);
+        $this->uuid 
+            = $uuid 
+            = str_replace('.%ext%', image_type_to_extension(exif_imagetype($img)), $uuid);
+
+        return $this;
+    }
+
+    /**
+     * Compress the image.
+     *
+     * @param  string    $img
+     * @return $this
+     */
+    public function compress()
+    {
+        $img = $this->resolved_img;
+        $factory = new OptimizerFactory;
+        $optimizer = $factory->get();
+        $optimizer->optimize($img);
+
+        return $this;
+    }
+
+    /**
+     * Alias self::compress()
+     *
+     * @param string    $img
+     * @return $this
+     */
+    public function optimize()
+    {
+        return $this->compress();
+    }
+
+    /**
+     * Validate the given image.
+     *
+     * @param  string    $img
+     * @return $this
+     * @throws OussamaElgoumri\Exceptions\ImageException
+     */
+    public function validate()
+    {
+        $img = $this->resolved_img;
+        $imageValidator = new ImageValidator();
+        $imageValidator->validate($img);
+        $this->type = $imageValidator->getType();
+
+        return $this;
+    }
+
+    /**
+     * Get the image from anywhere to local file.
+     *
+     * @return $this
+     * @throws Exception
+     */
+    public function resolve()
+    {
+        $img = $this->img;
+
+        if (file_exists($img) && is_writable($img)) {
+            $this->resolved_img = $img;
+            return $this;
+        }
+
+        if (filter_var($img, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED)) {
+            $this->resolved_img = $this->downloadToTmp($img);
+            return $this;
+        }
+
+        if (isset($_FILES[$img]) && isset($_FILES[$img]['tmp_name'])) {
+            $this->resolved_img = $_FILES[$img]['tmp_name'];
+            return $this;
+        }
+
+        throw new \Exception('Image should be either: valid full path, remote url or form input file name');
+    }
+
+    /**
+     * Download the image to /tmp.
+     *
+     * @param string    $img
+     * @reutrn $tmpfile
+     */
+    private function downloadToTmp($url)
+    {
+        $tmpfile = tempnam('', '');
+        $handle = fopen($tmpfile, 'w');
+        fwrite($handle, Curl__get($url));
+        fclose($handle);
+
+        return $tmpfile;
+    }
+
+    /**
+     * To ease testing.
+     *
+     * @param string    $prop
+     */
+    public function __get($prop)
+    {
+        if (property_exists($this, $prop)) {
+            return $this->$prop;
+        }
+
+        throw new \Exception(self::class . " has no property with the name: {$prop}");
+    }
+
+    /**
+     * To ease testing.
+     *
+     * @param string    $prop
+     * @param string    mixed
+     */
+    public function __set($prop, $value)
+    {
+        if (property_exists($this, $prop)) {
+            return $this->$prop = $value;
+        }
+
+        throw new \Exception(self::class . " has no property with the name: {$prop}");
     }
 }

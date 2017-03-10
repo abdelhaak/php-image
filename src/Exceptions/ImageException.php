@@ -1,15 +1,18 @@
 <?php
 
+
 //
 // Oussama Elgoumri
 // contact@sec4ar.com
 //
-// Fri Feb  10 13:19:42 CET 2017
+// Thu Mar  9 13:18:45 CET 2017
 //
+
 
 namespace OussamaElgoumri\Exceptions;
 
-class ImagePublicPathNotSetException extends ImageException
+
+class ImageException extends \Exception
 {
     /**
      * Initialize Constructor.
