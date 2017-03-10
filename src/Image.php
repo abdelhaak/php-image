@@ -178,6 +178,48 @@ class Image
     }
 
     /**
+     * Serialize the results.
+     *
+     * @return string
+     */
+    public function serialize()
+    {
+        $data = [];
+        $data[] = [
+            'path' => $this->path,
+            'relative_path' => $this->relative_path,
+            'type' => $this->type,
+        ];
+
+        foreach ($this->resized_imgs as $img) {
+            $data[] = [
+                'path' => $img['path'],
+                'relative_path' => $img['relative_path'],
+            ];
+        }
+
+        return serialize($data);
+    }
+
+    /**
+     * Unserialize already serialized results.
+     *
+     * @param  string    $results
+     * @return array
+     */
+    public function unserialize($results)
+    {
+        $this->resized_imgs = unserialize($results);
+        $item = array_shift($this->resized_imgs);
+        $this->path = $item['path'];
+        $this->relative_path = $item['relative_path'];
+        $this->type = $item['type'];
+        $this->compile();
+
+        return $this->get();
+    }
+
+    /**
      * Resize the image.
      *
      * @return $this

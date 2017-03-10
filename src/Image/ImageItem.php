@@ -18,7 +18,6 @@ class ImageItem
     private $size;
     private $mime;
     private $type;
-    private $filesize;
 
     /**
      * You can also get properties by name.

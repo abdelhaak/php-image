@@ -1,6 +1,6 @@
 {
     "name": "elgoumri-oussama/php-image",
-    "description": "Take care of images for you (uploaded, remote and by path)",
+    "description": "You don't have to worry about images anymore.",
     "type": "library",
     "license": "MIT",
     "authors": [
