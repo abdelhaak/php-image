@@ -10,10 +10,10 @@ Installation
 
 Get Started
 ===========
-`PhpImage` uses (PhpConfig)[https://github.com/OussamaElgoumri/php-config] so
+`PhpImage` uses [PhpConfig](https://github.com/OussamaElgoumri/php-config) so
 basically all you have to do, is:
 
-```
+```php
 use OussamaElgoumri\Components\Image;
 
 // $img can be: url, local image, name of input field.
@@ -48,7 +48,7 @@ image is an instance of `ImageItem` that will allow you to do:
 
 Configuration
 =============
-Since we are using (PhpConfig)[https://github.com/OussamaElgoumri/php-config]
+Since we are using [PhpConfig](https://github.com/OussamaElgoumri/php-config)
 this gives us a lot of flexibility of how we want to configure the images.
 
 the default configuration:
