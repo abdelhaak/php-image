@@ -9,7 +9,7 @@
 // Wed Feb  8 12:48:02 WET 2017
 //
 
-require_once getcwd() . '/autoload.php';
+require_once getcwd() . '/vendor/autoload.php';
 
 use OussamaElgoumri\Console\Exception;
 use OussamaElgoumri\Components\Image;
