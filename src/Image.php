@@ -60,8 +60,8 @@ class Image
      * @var $default_config     Default image configuration.
      */
     protected $default_config = [
-        'IMAGE_ALLOWED_TYPES',
-        'IMAGE_DENIED_TYPES',
+        'IMAGE_ALLOWED_TYPES' => '',
+        'IMAGE_DENIED_TYPES' => '',
         'IMAGE_DIRS'     => 'Y/i/d',
         'IMAGE_PUBLIC'   => 'public/images',
         'IMAGE_RELATIVE' => 'images',
@@ -75,20 +75,20 @@ class Image
      *
      * @param string    $img
      */
-    public function __construct($img = null)
+    public function __construct($img = null, $config = [])
     {
         if ($img) {
             $this->img = $img;
-            $this->defaults();
+            $this->defaults($config);
         }
     }
 
     /**
      * Apply default configuration to the image.
      */
-    private function defaults()
+    private function defaults($config)
     {
-        Config__load('images', $this->default_config);
+        Config__load('images', $this->getDefaultConfig($config));
 
         $this
             ->resolve()
@@ -98,6 +98,29 @@ class Image
             ->copy()
             ->resize()
             ->compile();
+    }
+
+    /**
+     * Get default configuration.
+     *
+     * @param  array     $config
+     * @return array
+     */
+    private function getDefaultConfig($config)
+    {
+        $defaults = [];
+
+        foreach ($this->default_config as $key => $value) {
+            if (isset($config[$key]) && !empty($config[$key])) {
+                $defaults[$key] = $config[$key];
+            } elseif (isset($config[$key]) && empty($config[$key])) {
+                continue;
+            } else {
+                $defaults[$key] = $value;
+            }
+        }
+
+        return $defaults;
     }
 
     /**

@@ -16,6 +16,27 @@ use OussamaElgoumri\TestCommon;
 
 class ImageTest extends TestCommon
 {
+    public function test_getDefaultConfig()
+    {
+        list($obj, $m) = $this->getMethod('getDefaultConfig');
+        $results = $m->invoke($obj, [
+            'IMAGE_ALLOWED_TYPES' => 'jpg',
+            'IMAGE_DENIED_TYPES' => 'psd',
+            'IMAGE_UUID' => '%hash%.%ext%',
+            'IMAGE_SIZES' => '',
+        ]);
+
+        $this->assertEquals($results, [
+            'IMAGE_ALLOWED_TYPES' => 'jpg',
+            'IMAGE_DENIED_TYPES'  => 'psd',
+            'IMAGE_DIRS'          => 'Y/i/d',
+            'IMAGE_PUBLIC'        => 'public/images',
+            'IMAGE_RELATIVE'      => 'images',
+            'IMAGE_UUID'          => '%hash%.%ext%',
+            'IMAGE_OPTIMIZE'      => true,
+        ]);
+    }
+
     public function test_compile_get()
     {
         $image = new Image($this->faker->imageUrl);
