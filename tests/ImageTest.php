@@ -50,7 +50,7 @@ class ImageTest extends TestCommon
     public function test_resize()
     {
         $image = new Image;
-        Config__load('images', $image->default_config);
+        Config__load($image->getConfigFilename(), $image->default_config);
         Config__set('IMAGE_PUBLIC', 'tests/public/images');
         $image->resolved_img = $this->faker->image('/tmp', 1, 1);
         $image
@@ -69,7 +69,7 @@ class ImageTest extends TestCommon
     public function test_copy()
     {
         $image = new Image;
-        Config__load('images', $image->default_config);
+        Config__load($image->getConfigFilename(), $image->default_config);
         Config__set('IMAGE_PUBLIC', 'tests/public/images');
         $image->resolved_img = $this->faker->image('/tmp', 1, 1);
         $image->uuid()->copy();
@@ -88,7 +88,7 @@ class ImageTest extends TestCommon
     public function test_createDirs()
     {
         $image = new Image;
-        Config__load('images', $image->default_config);
+        Config__load($image->getConfigFilename(), $image->default_config);
         Config__set('IMAGE_PUBLIC', 'tests/public/images');
         list($obj, $m) = $this->getMethod('createDirs');
         $results = $m->invoke($obj);
@@ -105,7 +105,7 @@ class ImageTest extends TestCommon
     public function test_uuid()
     {
         $image = new Image;
-        Config__load('images', $image->default_config);
+        Config__load($image->getConfigFilename(), $image->default_config);
         $image->resolved_img = $this->faker->image('/tmp', 1, 1);
         $image->uuid();
         $this->assertRegExp('/[a-z0-9]{40}--[0-9]{10}\.[a-z]{3,4}/i', $image->uuid);

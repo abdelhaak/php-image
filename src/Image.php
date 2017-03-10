@@ -88,7 +88,7 @@ class Image
      */
     private function defaults($config)
     {
-        Config__load('images', $this->getDefaultConfig($config));
+        Config__load($this->getConfigFilename(), $this->getDefaultConfig($config));
 
         $this
             ->resolve()
@@ -131,6 +131,16 @@ class Image
     public function get()
     {
         return $this->data;
+    }
+
+    /**
+     * Get the configuration filename.
+     *
+     * @return string
+     */
+    public function getConfigFilename()
+    {
+        return 'image';
     }
 
     /**
