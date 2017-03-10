@@ -9,10 +9,11 @@
 
 namespace OussamaElgoumri\Components;
 
+use ImageOptimizer\OptimizerFactory;
 use OussamaElgoumri\Components\Image\ImageItem;
+use OussamaElgoumri\Components\Image\ImageIterator;
 use OussamaElgoumri\Components\Image\ImageResizer;
 use OussamaElgoumri\Components\Image\ImageValidator;
-use ImageOptimizer\OptimizerFactory;
 
 class Image
 {
@@ -52,9 +53,9 @@ class Image
     private $resized_imgs;
 
     /**
-     * @var array   compiled images.
+     * @var ImageIterator
      */
-    private $data = [];
+    private $imageIterator;
 
     /**
      * @var $default_config     Default image configuration.
@@ -130,7 +131,7 @@ class Image
      */
     public function get()
     {
-        return $this->data;
+        return $this->imageIterator;
     }
 
     /**
@@ -164,17 +165,17 @@ class Image
         $imageItem->setPath($this->path);
         $imageItem->setRelativePath($this->relative_path);
         $imageItem->setType($this->type);
-        $this->data[] = $imageItem;
+        $data[] = $imageItem;
 
         foreach ($this->resized_imgs as $img) {
             $imageItem = new ImageItem;
             $imageItem->setPath($img['path']);
             $imageItem->setRelativePath($img['relative_path']);
             $imageItem->setType($this->type);
-            $this->data[] = $imageItem;
+            $data[] = $imageItem;
         }
 
-        return $this;
+        $this->imageIterator = new ImageIterator($data);
     }
 
     /**
