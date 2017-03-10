@@ -69,12 +69,13 @@ protected $default_config = [
 ```
 
 ### IMAGE_ALLOWED_TYPES & IMAGE_DENIED_TYPES
-`IMAGE_ALLOWED_TYPES` and `IMAGE_DENIED_TYPES` are the types defined by 
+`IMAGE_ALLOWED_TYPES` and `IMAGE_DENIED_TYPES` uses the types defined by 
 `exif_imagetype()` function, you can emit `IMAGETYPE_` or don't, you'r free :)
 
 ```php
 try {
-    // Accept only: jpg, png.  $image = new Image('my-image', [
+    // Accept only: jpg, png.  
+    $image = new Image('my-image', [
         'IMAGE_ALLOWED_TYPES' => 'jpg,png,gif',
     ]);
 
@@ -130,7 +131,7 @@ the default will generate an image that looks like this: `bb9ac6ff6127926d2931a0
 Wether or not to optimize the image, default: true, required some linux libraries,
 if they are not found, then it will just continue silently.
 
-please check all the libraries you need (here)[https://github.com/psliwa/image-optimizer]
+please check all the libraries you need [here](https://github.com/psliwa/image-optimizer)
 
 ### IMAGE_SIZES
 The size that the image will be converted to, all the generated images follow
