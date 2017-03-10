@@ -35,5 +35,8 @@
         "psr-4": {
             "OussamaElgoumri\\Components\\": "tests/"
         }
-    }
+    },
+    "bin": [
+        "phpimage"
+    ]
 }
